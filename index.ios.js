@@ -1,47 +1,21 @@
-import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import React, { Component } from 'React'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+import { AppRegistry } from 'react-native'
+
+import gamesReducer from './reducers/games'
+import App from './containers/App'
 
 class NHL4Chromecast extends Component {
   render() {
+    const store = createStore(gamesReducer, applyMiddleware(thunk))
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Provider store={store}>
+        <App />
+      </Provider>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-})
 
 AppRegistry.registerComponent('nhl4chromecast', () => NHL4Chromecast)
