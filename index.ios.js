@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   },
 })
 
-AppRegistry.registerComponent('NHL4Chromecast', () => NHL4Chromecast)
+AppRegistry.registerComponent('nhl4chromecast', () => NHL4Chromecast)
