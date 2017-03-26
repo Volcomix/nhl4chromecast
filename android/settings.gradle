@@ -1,0 +1,3 @@
+rootProject.name = 'nhl4chromecast'
+
+include ':app'
