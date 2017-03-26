@@ -6,7 +6,7 @@ import {
   View
 } from 'react-native'
 
-export default class NHL4Chromecast extends Component {
+class NHL4Chromecast extends Component {
   render() {
     return (
       <View style={styles.container}>
