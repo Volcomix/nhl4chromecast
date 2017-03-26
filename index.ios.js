@@ -1,18 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from 'react-native'
 
-export default class nhl4chromecast extends Component {
+export default class NHL4Chromecast extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -27,7 +21,7 @@ export default class nhl4chromecast extends Component {
           Cmd+D or shake for dev menu
         </Text>
       </View>
-    );
+    )
   }
 }
 
@@ -48,6 +42,6 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-});
+})
 
-AppRegistry.registerComponent('nhl4chromecast', () => nhl4chromecast);
+AppRegistry.registerComponent('NHL4Chromecast', () => NHL4Chromecast)
