@@ -17,11 +17,11 @@ class App extends Component {
   }
 
   render() {
-    const { isFetching } = this.props
+    const { isFetching, gamesCount } = this.props
     return (
       <View style={styles.container}>
         <Text>
-          {isFetching ? 'Fetching' : 'Done'}
+          {isFetching ? 'Fetching' : `Received ${gamesCount} games`}
         </Text>
         <Text style={styles.welcome}>
           Welcome to React Native!
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  isFetching: state.isFetching
+  isFetching: state.isFetching,
+  gamesCount: state.items.length
 })
 
 export default connect(mapStateToProps)(App)

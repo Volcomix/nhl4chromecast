@@ -1,13 +1,18 @@
 import * as types from '../constants/actionTypes'
 
-export const fetchGames = date => dispatch => {
+export const fetchGames = date => async dispatch => {
   dispatch(requestGames(date))
-  const formattedDate = date.format('YYYY-MM-DD')
-  const url = `http://statsapi.web.nhl.com/api/v1/schedule?date=${formattedDate}`
-  return fetch(url)
-    .then(response => response.json())
-    .then(json => dispatch(receiveGames(date, json)))
-    .catch(error => console.error(error))
+  const hostname = 'statsapi.web.nhl.com'
+  const dateParam = `date=${date.format('YYYY-MM-DD')}`
+  const expandParam = 'expand=schedule.game.content.media.epg'
+  const url = `http://${hostname}/api/v1/schedule?${dateParam}&${expandParam}`
+  try {
+    const response = await fetch(url)
+    const json = await response.json()
+    dispatch(receiveGames(date, json))
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export const requestGames = date => ({
