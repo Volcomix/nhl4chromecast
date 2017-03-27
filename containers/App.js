@@ -1,7 +1,7 @@
 import React, { Component } from 'React'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View } from 'react-native'
 import moment from 'moment'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
 import { fetchGames } from '../actions/games'
 
@@ -20,19 +20,10 @@ class App extends Component {
     const { isFetching, gamesCount } = this.props
     return (
       <View style={styles.container}>
-        <Text>
-          {isFetching ? 'Fetching' : `Received ${gamesCount} games`}
-        </Text>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        {isFetching ?
+          <ActivityIndicator size='large' /> :
+          <Text>Received {gamesCount} games</Text>
+        }
       </View>
     )
   }
@@ -44,16 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 })
 
