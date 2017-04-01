@@ -7,10 +7,6 @@ import { fetchGames } from '../actions/games'
 import GameRow from '../components/GameRow'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const { dispatch } = this.props
     const yesterday = moment().subtract(1, 'day')
@@ -18,15 +14,15 @@ class App extends Component {
   }
 
   render() {
-    const { isFetching, games } = this.props
+    const { isFetching, date, games } = this.props
     return (
       <View style={styles.container}>
         {isFetching ?
           <ActivityIndicator size='large' /> :
           <ListView
             dataSource={games}
-            enableEmptySections={true}
             renderRow={game => <GameRow game={game} />}
+            enableEmptySections={true}
           />
         }
       </View>
@@ -39,7 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: '#fff',
+    backgroundColor: '#efeff4',
     paddingTop: 20,
   },
 })
@@ -50,7 +46,8 @@ const gamesDataSource = new ListView.DataSource({
 
 const mapStateToProps = state => ({
   isFetching: state.isFetching,
-  games: gamesDataSource.cloneWithRows(state.items)
+  date: state.date,
+  games: gamesDataSource.cloneWithRows(state.items),
 })
 
 export default connect(mapStateToProps)(App)

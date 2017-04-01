@@ -2,7 +2,6 @@ import React, { Component } from 'React'
 import { TouchableHighlight, View, Image, Text, StyleSheet } from 'react-native'
 
 import teamsImages from '../constants/teamsImages'
-import { touchableUnderlayColor, touchableOpacity } from '../constants/styles'
 
 class GameRow extends Component {
   render() {
@@ -11,11 +10,7 @@ class GameRow extends Component {
     const awayImage = teamsImages[away.abbreviation.toLowerCase()]
     const homeImage = teamsImages[home.abbreviation.toLowerCase()]
     return (
-      <TouchableHighlight
-        underlayColor={touchableUnderlayColor}
-        activeOpacity={touchableOpacity}
-        onPress={() => { }}
-      >
+      <TouchableHighlight onPress={() => { }}>
         <View style={styles.container}>
           <View style={styles.away}>
             <Image style={styles.image} source={awayImage} />
@@ -35,8 +30,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    borderBottomColor: '#c7c7cc',
     paddingLeft: 8,
     paddingRight: 8,
   },
