@@ -4,7 +4,7 @@ export const fetchGames = date => async dispatch => {
   dispatch(requestGames(date))
   const hostname = 'statsapi.web.nhl.com'
   const dateParam = `date=${date.format('YYYY-MM-DD')}`
-  const expandParam = 'expand=schedule.game.content.media.epg'
+  const expandParam = 'expand=schedule.game.content.media.epg,schedule.teams'
   const url = `http://${hostname}/api/v1/schedule?${dateParam}&${expandParam}`
   try {
     const response = await fetch(url)
