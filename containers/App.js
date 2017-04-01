@@ -1,17 +1,10 @@
 import React, { Component } from 'React'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import {
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  ListView,
-  Text,
-  Image,
-} from 'react-native'
+import { View, ActivityIndicator, ListView, StyleSheet } from 'react-native'
 
 import { fetchGames } from '../actions/games'
-import teamsImages from '../constants/teamsImages'
+import GameRow from '../components/GameRow'
 
 class App extends Component {
   constructor(props) {
@@ -32,23 +25,10 @@ class App extends Component {
           <ActivityIndicator size='large' /> :
           <ListView
             dataSource={games}
-            renderRow={this.renderGame}
+            enableEmptySections={true}
+            renderRow={game => <GameRow game={game} />}
           />
         }
-      </View>
-    )
-  }
-
-  renderGame = game => {
-    const { teams: { away: { team: away }, home: { team: home } } } = game
-    const awayImage = teamsImages[away.abbreviation.toLowerCase()]
-    const homeImage = teamsImages[home.abbreviation.toLowerCase()]
-    return (
-      <View style={styles.game}>
-        <Image source={awayImage} />
-        <Text>{away.teamName}</Text>
-        <Text>{home.teamName}</Text>
-        <Image source={homeImage} />
       </View>
     )
   }
@@ -59,16 +39,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: '#F5FCFF',
-    paddingTop: 24,
-    paddingRight: 12,
-    paddingLeft: 12,
-    paddingBottom: 4,
-  },
-  game: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    paddingTop: 20,
   },
 })
 
