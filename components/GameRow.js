@@ -12,14 +12,12 @@ class GameRow extends Component {
     return (
       <TouchableHighlight onPress={() => { }}>
         <View style={styles.container}>
-          <View style={styles.away}>
-            <Image style={styles.image} source={awayImage} />
+          <Image style={styles.image} source={awayImage} />
+          <View style={styles.teamNames}>
             <Text style={styles.text}>{away.teamName}</Text>
-          </View>
-          <View style={styles.home}>
             <Text style={styles.text}>{home.teamName}</Text>
-            <Image style={styles.image} source={homeImage} />
           </View>
+          <Image style={styles.image} source={homeImage} />
         </View>
       </TouchableHighlight>
     )
@@ -36,16 +34,10 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
     paddingRight: 4,
   },
-  away: {
+  teamNames: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  home: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   image: {
