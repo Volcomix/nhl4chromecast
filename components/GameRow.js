@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#c7c7cc',
-    paddingLeft: 8,
-    paddingRight: 8,
+    paddingLeft: 4,
+    paddingRight: 4,
   },
   away: {
     flex: 1,
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
   image: {
     marginTop: 16,
     marginBottom: 16,
-    marginLeft: 8,
-    marginRight: 8,
+    marginLeft: 12,
+    marginRight: 12,
   },
   text: {
-    color: 'rgba(0, 0, 0, 0.6)'
+    color: '#8e8e93'
   },
 })
 
