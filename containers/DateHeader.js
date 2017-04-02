@@ -3,6 +3,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Image,
   Modal,
   DatePickerIOS,
   StyleSheet
@@ -28,6 +29,12 @@ class DateHeader extends Component {
 
   render() {
     const { isDatePickerVisible } = this.state
+    let previousDate, nextDate
+    if (!isDatePickerVisible) {
+      const { date } = this.props
+      previousDate = moment(date).subtract(1, 'day')
+      nextDate = moment(date).add(1, 'day')
+    }
     return (
       <View style={styles.container}>
         <View style={styles.appBar}>
@@ -56,13 +63,36 @@ class DateHeader extends Component {
                 {this.state.date.format('D MMM')}
               </Text>
             </TouchableOpacity>
-          ] :
-            <TouchableOpacity onPress={this.showDatePicker}>
-              <Text style={[styles.text, styles.title, styles.button]}>
-                {this.props.date.format('dddd D MMM')}
-              </Text>
-            </TouchableOpacity>
-          }
+          ] : [
+              <TouchableOpacity
+                key='previous-date'
+                style={styles.leftIcon}
+                onPress={this.fetchPreviousGames}
+              >
+                <Image
+                  style={styles.icon}
+                  source={require('../img/left.png')}
+                />
+              </TouchableOpacity>,
+              <TouchableOpacity
+                key='title-button'
+                onPress={this.showDatePicker}
+              >
+                <Text style={[styles.text, styles.title, styles.button]}>
+                  {this.props.date.format('dddd D MMM')}
+                </Text>
+              </TouchableOpacity>,
+              <TouchableOpacity
+                key='next-date'
+                style={styles.rightIcon}
+                onPress={this.fetchNextGames}
+              >
+                <Image
+                  style={[styles.icon, styles.mirrorX]}
+                  source={require('../img/left.png')}
+                />
+              </TouchableOpacity>,
+            ]}
         </View>
         {isDatePickerVisible ? [
           <DatePickerIOS
@@ -113,6 +143,16 @@ class DateHeader extends Component {
 
   fetchSelectedGames = () => {
     this.fetchGames(this.state.date)
+  }
+
+  fetchPreviousGames = () => {
+    const date = moment(this.props.date).subtract(1, 'day')
+    this.fetchGames(date)
+  }
+
+  fetchNextGames = () => {
+    const date = moment(this.props.date).add(1, 'day')
+    this.fetchGames(date)
   }
 
   fetchYesterdayGames = () => {
@@ -182,6 +222,24 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  leftIcon: {
+    position: 'absolute',
+    left: 8,
+    paddingTop: 20,
+  },
+  rightIcon: {
+    position: 'absolute',
+    right: 8,
+    paddingTop: 20,
+  },
+  icon: {
+    width: 13,
+    height: 21,
+    resizeMode: 'contain',
+  },
+  mirrorX: {
+    transform: [{ scaleX: -1 }]
+  }
 })
 
 const mapStateToProps = ({ date }) => ({
