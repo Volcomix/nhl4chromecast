@@ -1,7 +1,7 @@
 import React, { Component } from 'React'
+import { View, ActivityIndicator, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { View, ActivityIndicator, ListView, StyleSheet } from 'react-native'
 
 import { fetchGames } from '../actions/games'
 import GameRow from '../components/GameRow'
