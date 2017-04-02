@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux'
 import moment from 'moment'
 
-import { keyColor, headerHeight } from '../constants/styles'
+import { keyColor, headerHeight, actionBarHeight } from '../constants/styles'
 import { fetchGames } from '../actions/games'
 
 class DateHeader extends Component {
@@ -48,9 +48,9 @@ class DateHeader extends Component {
               {this.props.date.format('ddd Do MMM')}
             </Text>,
             <TouchableOpacity
-              key='date'
+              key='title-date'
               style={styles.rightButton}
-              onPress={this.fetchGames}
+              onPress={this.fetchSelectedGames}
             >
               <Text style={[styles.text, styles.title, styles.button]}>
                 {this.state.date.format('D MMM')}
@@ -59,18 +59,39 @@ class DateHeader extends Component {
           ] :
             <TouchableOpacity onPress={this.showDatePicker}>
               <Text style={[styles.text, styles.title, styles.button]}>
-                {this.props.date.format('dddd Do MMMM')}
+                {this.props.date.format('ddd Do MMM')}
               </Text>
             </TouchableOpacity>
           }
         </View>
-        {isDatePickerVisible ? (
+        {isDatePickerVisible ? [
           <DatePickerIOS
+            key='date-picker'
             mode='date'
             date={this.state.date.toDate()}
             onDateChange={this.changeDate}
-          />
-        ) : undefined}
+          />,
+          <View
+            key='date-picker-options'
+            style={styles.actionBar}
+          >
+            <TouchableOpacity onPress={this.fetchYesterdayGames}>
+              <Text style={[styles.text, styles.button]}>
+                Hier
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.fetchTodayGames}>
+              <Text style={[styles.text, styles.button]}>
+                Aujourd'hui
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.fetchTomorrowGames}>
+              <Text style={[styles.text, styles.button]}>
+                Demain
+              </Text>
+            </TouchableOpacity>
+          </View>,
+        ] : undefined}
       </View>
     )
   }
@@ -90,9 +111,28 @@ class DateHeader extends Component {
     this.setState({ date: moment(date) })
   }
 
-  fetchGames = () => {
+  fetchSelectedGames = () => {
+    this.fetchGames(this.state.date)
+  }
+
+  fetchYesterdayGames = () => {
+    const date = moment().subtract(1, 'day')
+    this.fetchGames(date)
+  }
+
+  fetchTodayGames = () => {
+    const date = moment()
+    this.fetchGames(date)
+  }
+
+  fetchTomorrowGames = () => {
+    const date = moment().add(1, 'day')
+    this.fetchGames(date)
+  }
+
+  fetchGames = (date) => {
     const { dispatch } = this.props
-    dispatch(fetchGames(this.state.date))
+    dispatch(fetchGames(date))
     this.hideDatePicker()
   }
 }
@@ -133,6 +173,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     paddingTop: 20,
+  },
+  actionBar: {
+    height: actionBarHeight,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 })
 
