@@ -45,7 +45,7 @@ class DateHeader extends Component {
               key='title'
               style={[styles.text, styles.title]}
             >
-              {this.props.date.format('ddd Do MMM')}
+              {this.props.date.format('dddd D MMM')}
             </Text>,
             <TouchableOpacity
               key='title-date'
@@ -59,7 +59,7 @@ class DateHeader extends Component {
           ] :
             <TouchableOpacity onPress={this.showDatePicker}>
               <Text style={[styles.text, styles.title, styles.button]}>
-                {this.props.date.format('ddd Do MMM')}
+                {this.props.date.format('dddd D MMM')}
               </Text>
             </TouchableOpacity>
           }
