@@ -1,10 +1,11 @@
 import React, { Component } from 'React'
-import { View, ActivityIndicator, ListView, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
 import { fetchGames } from '../actions/games'
-import GameRow from '../components/GameRow'
+import DateHeader from './DateHeader'
+import Games from './Games'
 
 class App extends Component {
   componentDidMount() {
@@ -14,17 +15,10 @@ class App extends Component {
   }
 
   render() {
-    const { isFetching, date, games } = this.props
     return (
       <View style={styles.container}>
-        {isFetching ?
-          <ActivityIndicator size='large' /> :
-          <ListView
-            dataSource={games}
-            renderRow={game => <GameRow game={game} />}
-            enableEmptySections={true}
-          />
-        }
+        <DateHeader />
+        <Games />
       </View>
     )
   }
@@ -33,20 +27,10 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#efeff4',
-    paddingTop: 20,
   },
 })
 
-const gamesDataSource = new ListView.DataSource({
-  rowHasChanged: (game1, game2) => game1.gamePk !== game2.gamePk
-})
-
 const mapStateToProps = state => ({
-  isFetching: state.isFetching,
-  date: state.date,
-  games: gamesDataSource.cloneWithRows(state.items),
 })
 
 export default connect(mapStateToProps)(App)

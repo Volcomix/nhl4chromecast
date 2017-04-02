@@ -3,9 +3,13 @@ import { AppRegistry } from 'react-native'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import moment from 'moment'
+import 'moment/locale/fr'
 
 import gamesReducer from './reducers/games'
 import App from './containers/App'
+
+moment.locale('fr')
 
 class NHL4Chromecast extends Component {
   render() {
