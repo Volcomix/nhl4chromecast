@@ -1,5 +1,12 @@
 import React, { Component } from 'React'
-import { TouchableHighlight, View, Image, Text, StyleSheet } from 'react-native'
+import {
+  TouchableHighlight,
+  View,
+  Image,
+  Text,
+  ActionSheetIOS,
+  StyleSheet
+} from 'react-native'
 
 import teamsImages from '../constants/teamsImages'
 
@@ -10,7 +17,7 @@ class GameRow extends Component {
     const awayImage = teamsImages[away.abbreviation.toLowerCase()]
     const homeImage = teamsImages[home.abbreviation.toLowerCase()]
     return (
-      <TouchableHighlight onPress={() => { }}>
+      <TouchableHighlight onPress={this.chooseFeed}>
         <View style={styles.container}>
           <Image style={styles.image} source={awayImage} />
           <View style={styles.teamNames}>
@@ -21,6 +28,34 @@ class GameRow extends Component {
         </View>
       </TouchableHighlight>
     )
+  }
+
+  chooseFeed = () => {
+    const { game } = this.props
+    const { teams: { away: { team: away }, home: { team: home } } } = game
+    const media = game.content.media.epg.find(media => media.title === 'NHLTV')
+    const options = media.items.map(this.formatFeed)
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Annuler', ...options],
+        cancelButtonIndex: 0,
+        title: `${away.name} - ${home.name}`,
+      },
+      buttonIndex => { }
+    )
+  }
+
+  formatFeed = ({ feedName, mediaFeedType, callLetters }) => {
+    if (feedName) {
+      return feedName
+    } else {
+      let name = mediaFeedType[0] + mediaFeedType.slice(1).toLowerCase()
+      if (callLetters) {
+        return `${name} (${callLetters})`
+      } else {
+        return name
+      }
+    }
   }
 }
 
