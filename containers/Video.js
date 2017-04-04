@@ -13,13 +13,15 @@ import { keyColor, headerHeight } from '../constants/styles'
 
 class Video extends Component {
   render() {
+    const { params: { game, media } } = this.props.navigation.state
+    const { teams: { away: { team: away }, home: { team: home } } } = game
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.appBar}>
             <TouchableOpacity
               style={styles.leftIcon}
-              onPress={this.showGames}
+              onPress={this.goBack}
             >
               <View style={styles.leftButton}>
                 <Image
@@ -38,13 +40,34 @@ class Video extends Component {
             <Text style={[styles.text, styles.title]}>Vidéo</Text>
           </View>
         </View>
+        <View style={styles.content}>
+          <Text>
+            {away.name} - {home.name}
+          </Text>
+          <Text>
+            {this.formatFeed(media)}
+          </Text>
+        </View>
       </View>
     )
   }
 
-  showGames = () => {
+  goBack = () => {
     const { dispatch } = this.props
-    dispatch(NavigationActions.navigate({ routeName: 'Home' }))
+    dispatch(NavigationActions.back())
+  }
+
+  formatFeed = ({ feedName, mediaFeedType, callLetters }) => {
+    if (feedName) {
+      return feedName
+    } else {
+      let name = mediaFeedType[0] + mediaFeedType.slice(1).toLowerCase()
+      if (callLetters) {
+        return `${name} (${callLetters})`
+      } else {
+        return name
+      }
+    }
   }
 }
 
@@ -93,6 +116,10 @@ const styles = StyleSheet.create({
     width: 13,
     height: 21,
     resizeMode: 'contain',
+  },
+  content: {
+    paddingTop: headerHeight + 8,
+    alignItems: 'center',
   },
 })
 
