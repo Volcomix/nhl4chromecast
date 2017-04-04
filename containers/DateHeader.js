@@ -1,4 +1,4 @@
-import React, { Component } from 'React'
+import React, { Component } from 'react'
 import {
   View,
   TouchableOpacity,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({ date }) => ({
+const mapStateToProps = ({ games: { date } }) => ({
   date: date || moment(),
 })
 

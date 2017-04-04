@@ -1,8 +1,8 @@
-import React, { Component } from 'React'
+import React, { Component } from 'react'
 import { View, ActivityIndicator, ListView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
-import GameRow from '../components/GameRow'
+import GameRow from './GameRow'
 import { headerHeight } from '../constants/styles'
 
 class Games extends Component {
@@ -36,9 +36,9 @@ const gamesDataSource = new ListView.DataSource({
   rowHasChanged: (game1, game2) => game1.gamePk !== game2.gamePk
 })
 
-const mapStateToProps = state => ({
-  isFetching: state.isFetching,
-  games: gamesDataSource.cloneWithRows(state.items),
+const mapStateToProps = ({ games }) => ({
+  isFetching: games.isFetching,
+  games: gamesDataSource.cloneWithRows(games.items),
 })
 
 export default connect(mapStateToProps)(Games)

@@ -1,4 +1,4 @@
-import React, { Component } from 'React'
+import React, { Component } from 'react'
 import {
   TouchableHighlight,
   View,
@@ -7,6 +7,8 @@ import {
   ActionSheetIOS,
   StyleSheet
 } from 'react-native'
+import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
 import teamsImages from '../constants/teamsImages'
 
@@ -31,7 +33,7 @@ class GameRow extends Component {
   }
 
   chooseFeed = () => {
-    const { game } = this.props
+    const { game, dispatch } = this.props
     const { teams: { away: { team: away }, home: { team: home } } } = game
     const media = game.content.media.epg.find(media => media.title === 'NHLTV')
     const options = media.items.map(this.formatFeed)
@@ -41,7 +43,7 @@ class GameRow extends Component {
         cancelButtonIndex: 0,
         title: `${away.name} - ${home.name}`,
       },
-      buttonIndex => { }
+      buttonIndex => dispatch(NavigationActions.navigate({ routeName: 'Video' }))
     )
   }
 
@@ -86,4 +88,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default GameRow
+export default connect()(GameRow)

@@ -1,4 +1,4 @@
-import React, { Component } from 'React'
+import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment'
@@ -30,7 +30,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-})
-
-export default connect(mapStateToProps)(App)
+export default connect()(App)
