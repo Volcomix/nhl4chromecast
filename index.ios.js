@@ -3,17 +3,12 @@ import { AppRegistry } from 'react-native'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider, connect } from 'react-redux'
 import thunk from 'redux-thunk'
-import {
-  addNavigationHelpers,
-  createNavigationContainer,
-  createNavigator,
-  StackRouter,
-} from 'react-navigation'
+import { addNavigationHelpers, StackNavigator } from 'react-navigation'
 import moment from 'moment'
 import 'moment/locale/fr'
 
 import gamesReducer from './reducers/games'
-import App from './containers/App'
+import Games from './containers/Games'
 import Video from './containers/Video'
 
 moment.locale('fr')
@@ -22,51 +17,27 @@ class NHL4Chromecast extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppNavigator />
+        <AppWithNavigationState />
       </Provider>
     )
   }
 }
 
-class AppNavigator extends Component {
-  render() {
-    return (
-      <CustomNavigator navigation={addNavigationHelpers({
-        dispatch: this.props.dispatch,
-        state: this.props.nav,
-      })} />
-    )
-  }
-}
-
-AppNavigator = connect(state => ({ nav: state.nav }))(AppNavigator)
-
-const CustomView = ({
-  router,
-  navigation,
-}) => {
-  const { routes, index } = navigation.state
-  const ActiveScreen = router.getComponentForState(navigation.state)
-  return (
-    <ActiveScreen
-      navigation={addNavigationHelpers({
-        ...navigation,
-        state: routes[index],
-      })}
-    />
-  )
-}
-
-const CustomNavigator = createNavigationContainer(
-  createNavigator(StackRouter({
-    Home: { screen: App },
+const AppNavigator = StackNavigator(
+  {
+    Games: { screen: Games },
     Video: { screen: Video },
-  }))(CustomView)
+  },
+  {
+    initialRouteParams: {
+      date: moment().subtract(1, 'day')
+    }
+  }
 )
 
 const navReducer = (state, action) => {
-  const newState = CustomNavigator.router.getStateForAction(action, state)
-  return newState || state
+  const newState = AppNavigator.router.getStateForAction(action, state)
+  return (newState ? newState : state)
 }
 
 const appReducer = combineReducers({
@@ -75,5 +46,20 @@ const appReducer = combineReducers({
 })
 
 const store = createStore(appReducer, applyMiddleware(thunk))
+
+class AppWithNavigationState extends React.Component {
+  render() {
+    return (
+      <AppNavigator navigation={addNavigationHelpers({
+        dispatch: this.props.dispatch,
+        state: this.props.nav,
+      })} />
+    )
+  }
+}
+
+AppWithNavigationState = connect(state => ({
+  nav: state.nav
+}))(AppWithNavigationState)
 
 AppRegistry.registerComponent('nhl4chromecast', () => NHL4Chromecast)

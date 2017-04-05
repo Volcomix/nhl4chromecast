@@ -1,11 +1,46 @@
 import React, { Component } from 'react'
-import { View, ActivityIndicator, ListView, StyleSheet } from 'react-native'
+import { View, ActivityIndicator, ListView, Button, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
+import { fetchGames } from '../actions/games'
 import GameRow from './GameRow'
-import { headerHeight } from '../constants/styles'
 
 class Games extends Component {
+  static navigationOptions = {
+    title: ({ state }) => state.params.date.format('dddd D MMM'),
+    header: ({ state, dispatch, setParams }) => {
+      const previousDate = moment(state.params.date).subtract(1, 'day')
+      const nextDate = moment(state.params.date).add(1, 'day')
+      return {
+        left: (
+          <Button
+            title={previousDate.format('D MMM')}
+            onPress={() => {
+              dispatch(fetchGames(previousDate))
+              setParams({ date: previousDate })
+            }}
+          />
+        ),
+        right: (
+          <Button
+            title={nextDate.format('D MMM')}
+            onPress={() => {
+              dispatch(fetchGames(nextDate))
+              setParams({ date: nextDate })
+            }}
+          />
+        ),
+      }
+    },
+  }
+
+  componentDidMount() {
+    const { dispatch, navigation } = this.props
+    const { params } = navigation.state
+    dispatch(fetchGames(params.date))
+  }
+
   render() {
     const { isFetching, games } = this.props
     return (
@@ -13,8 +48,6 @@ class Games extends Component {
         {isFetching ?
           <ActivityIndicator size='large' /> :
           <ListView
-            contentInset={{ top: headerHeight }}
-            contentOffset={{ y: -headerHeight }}
             dataSource={games}
             renderRow={game => <GameRow game={game} />}
             enableEmptySections={true}
