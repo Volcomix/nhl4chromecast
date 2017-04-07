@@ -44,7 +44,7 @@ class GameRow extends Component {
         cancelButtonIndex: 0,
         title: `${away.name} - ${home.name}`,
       },
-      buttonIndex => dispatch(NavigationActions.navigate({
+      buttonIndex => buttonIndex && dispatch(NavigationActions.navigate({
         routeName: 'Video',
         params: {
           game,
