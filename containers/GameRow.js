@@ -5,7 +5,8 @@ import {
   Image,
   Text,
   ActionSheetIOS,
-  StyleSheet
+  AsyncStorage,
+  StyleSheet,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
@@ -44,13 +45,33 @@ class GameRow extends Component {
         cancelButtonIndex: 0,
         title: `${away.name} - ${home.name}`,
       },
-      buttonIndex => buttonIndex && dispatch(NavigationActions.navigate({
-        routeName: 'Login',
-        params: {
-          game,
-          media: media.items[buttonIndex - 1]
+      async buttonIndex => {
+        if (buttonIndex === 0) {
+          return
         }
-      }))
+        try {
+          const token = await AsyncStorage.getItem('token')
+          if (token === null) {
+            dispatch(NavigationActions.navigate({
+              routeName: 'Login',
+              params: {
+                game,
+                media: media.items[buttonIndex - 1]
+              }
+            }))
+          } else {
+            dispatch(NavigationActions.navigate({
+              routeName: 'Video',
+              params: {
+                game,
+                media: media.items[buttonIndex - 1]
+              }
+            }))
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
     )
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Button, StyleSheet } from 'react-native'
+import { View, TextInput, Button, AsyncStorage, StyleSheet } from 'react-native'
 
 class Login extends Component {
   static navigationOptions = {
@@ -30,11 +30,19 @@ class Login extends Component {
         <View style={styles.row}>
           <Button
             title='Se connecter'
-            onPress={() => { }}
+            onPress={this.login}
           />
         </View>
       </View>
     )
+  }
+
+  login = async () => {
+    try {
+      await AsyncStorage.setItem('token', '666')
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 
