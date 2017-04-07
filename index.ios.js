@@ -10,6 +10,7 @@ import 'moment/locale/fr'
 import gamesReducer from './reducers/games'
 import Games from './containers/Games'
 import Video from './containers/Video'
+import Login from './containers/Login'
 
 moment.locale('fr')
 
@@ -27,6 +28,7 @@ const AppNavigator = StackNavigator(
   {
     Games: { screen: Games },
     Video: { screen: Video },
+    Login: { screen: Login },
   },
   {
     initialRouteParams: {

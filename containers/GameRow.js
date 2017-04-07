@@ -45,7 +45,7 @@ class GameRow extends Component {
         title: `${away.name} - ${home.name}`,
       },
       buttonIndex => buttonIndex && dispatch(NavigationActions.navigate({
-        routeName: 'Video',
+        routeName: 'Login',
         params: {
           game,
           media: media.items[buttonIndex - 1]
