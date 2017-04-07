@@ -31,6 +31,7 @@ class Games extends Component {
             }}
           />
         ),
+        backTitle: 'Retour',
       }
     },
   }
