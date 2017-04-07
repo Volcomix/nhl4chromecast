@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
 import teamsImages from '../constants/teamsImages'
+import { formatFeed } from '../utils/gameUtils'
 
 class GameRow extends Component {
   render() {
@@ -36,7 +37,7 @@ class GameRow extends Component {
     const { game, dispatch } = this.props
     const { teams: { away: { team: away }, home: { team: home } } } = game
     const media = game.content.media.epg.find(media => media.title === 'NHLTV')
-    const options = media.items.map(this.formatFeed)
+    const options = media.items.map(formatFeed)
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: ['Annuler', ...options],
@@ -51,19 +52,6 @@ class GameRow extends Component {
         }
       }))
     )
-  }
-
-  formatFeed = ({ feedName, mediaFeedType, callLetters }) => {
-    if (feedName) {
-      return feedName
-    } else {
-      let name = mediaFeedType[0] + mediaFeedType.slice(1).toLowerCase()
-      if (callLetters) {
-        return `${name} (${callLetters})`
-      } else {
-        return name
-      }
-    }
   }
 }
 

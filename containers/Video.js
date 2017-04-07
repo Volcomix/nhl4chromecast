@@ -5,6 +5,8 @@ import {
   StyleSheet
 } from 'react-native'
 
+import { formatFeed } from '../utils/gameUtils'
+
 class Video extends Component {
   static navigationOptions = {
     title: 'Vidéo',
@@ -19,23 +21,10 @@ class Video extends Component {
           {away.name} - {home.name}
         </Text>
         <Text>
-          {this.formatFeed(media)}
+          {formatFeed(media)}
         </Text>
       </View>
     )
-  }
-
-  formatFeed = ({ feedName, mediaFeedType, callLetters }) => {
-    if (feedName) {
-      return feedName
-    } else {
-      let name = mediaFeedType[0] + mediaFeedType.slice(1).toLowerCase()
-      if (callLetters) {
-        return `${name} (${callLetters})`
-      } else {
-        return name
-      }
-    }
   }
 }
 
