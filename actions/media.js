@@ -3,11 +3,14 @@ import { AsyncStorage } from 'react-native'
 import * as types from '../constants/actionTypes'
 import { askLogin } from './authorization'
 
-export const showMedia = media => async dispatch => {
+export const showMedia = media => async (dispatch, getState) => {
   try {
-    const userToken = await AsyncStorage.getItem('userToken')
+    let userToken = getState().authorization.userToken
+    if (userToken === undefined) {
+      userToken = await AsyncStorage.getItem('userToken')
+    }
     if (userToken === null) {
-      dispatch(askLogin())
+      dispatch(askLogin(media))
     } else {
       dispatch(loadMedia(media))
     }

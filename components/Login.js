@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import { View, ActivityIndicator, TextInput, Button, StyleSheet } from 'react-native'
 
 class Login extends Component {
+  state = {
+    username: undefined,
+    password: undefined,
+  }
+
   render() {
-    const { isInProgress, onLoginPressed } = this.props
+    const { isInProgress } = this.props
+    const { username, password } = this.state
     return (
       <View style={styles.container}>
         <View style={[styles.row, styles.textField]}>
           <TextInput
             style={styles.input}
+            value={username}
+            onChangeText={this.setUsername}
             placeholder='Identifiant'
             keyboardType='email-address'
             autoCapitalize='none'
@@ -19,6 +27,8 @@ class Login extends Component {
         <View style={[styles.row, styles.textField]}>
           <TextInput
             style={styles.input}
+            value={password}
+            onChangeText={this.setPassword}
             placeholder='Mot de passe'
             secureTextEntry={true}
             returnKeyType='go'
@@ -29,12 +39,26 @@ class Login extends Component {
             <ActivityIndicator style={styles.progress} /> :
             <Button
               title='Se connecter'
-              onPress={onLoginPressed}
+              onPress={this.handleLoginPressed}
             />
           }
         </View>
       </View>
     )
+  }
+
+  setUsername = username => {
+    this.setState({ username })
+  }
+
+  setPassword = password => {
+    this.setState({ password })
+  }
+
+  handleLoginPressed = () => {
+    const { onLoginPressed } = this.props
+    const { username, password } = this.state
+    onLoginPressed(username, password)
   }
 }
 
