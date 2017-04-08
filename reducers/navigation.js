@@ -6,6 +6,7 @@ import AppNavigator from '../navigators/AppNavigator'
 const navigation = (state, action) => {
   switch (action.type) {
     case types.REQUEST_GAMES: return requestGames(state, action)
+    case types.ASK_LOGIN: return askLogin(state, action)
     default: return defaultState(state, action)
   }
 }
@@ -16,6 +17,13 @@ const requestGames = (state, action) => (
       params: { date: action.date },
       key: state.routes[0].key,
     }),
+    state
+  )
+)
+
+const askLogin = (state, action) => (
+  AppNavigator.router.getStateForAction(
+    NavigationActions.navigate({ routeName: 'Login' }),
     state
   )
 )

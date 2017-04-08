@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
-import { View, ActivityIndicator, ListView, Button, StyleSheet } from 'react-native'
+import { Button, ListView } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
 import { fetchGames } from '../actions/games'
-import GameRow from './GameRow'
+import { showMedia } from '../actions/media'
+import Games from '../components/Games'
 
-class Games extends Component {
+class GamesContainer extends Component {
   static navigationOptions = {
-    title: ({ state: { params: { date } } }) => date.format('dddd D MMM'),
-    header: ({ state: { params: { date } }, dispatch }) => {
+    header: ({ state, dispatch }) => {
+      const date = state.params.date
       const previousDate = moment(date).subtract(1, 'day')
       const nextDate = moment(date).add(1, 'day')
       return {
+        title: date.format('dddd D MMM'),
+        backTitle: 'Retour',
         left: (
           <Button
             title={previousDate.format('D MMM')}
@@ -25,41 +28,24 @@ class Games extends Component {
             onPress={() => dispatch(fetchGames(nextDate))}
           />
         ),
-        backTitle: 'Retour',
       }
     },
   }
 
   componentDidMount() {
-    const { dispatch, navigation: { state: { params } }, date } = this.props
+    const { fetchGames, navigation, date } = this.props
     if (date === undefined) {
-      dispatch(fetchGames(params.date))
+      fetchGames(navigation.state.params.date)
     }
   }
 
   render() {
-    const { isFetching, games } = this.props
+    const { isFetching, games, showMedia } = this.props
     return (
-      <View style={styles.container}>
-        {isFetching ?
-          <ActivityIndicator size='large' /> :
-          <ListView
-            dataSource={games}
-            renderRow={game => <GameRow game={game} />}
-            enableEmptySections={true}
-          />
-        }
-      </View>
+      <Games isFetching={isFetching} games={games} showMedia={showMedia} />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-})
 
 const gamesDataSource = new ListView.DataSource({
   rowHasChanged: (game1, game2) => game1.gamePk !== game2.gamePk
@@ -71,4 +57,7 @@ const mapStateToProps = ({ games }) => ({
   games: gamesDataSource.cloneWithRows(games.items),
 })
 
-export default connect(mapStateToProps)(Games)
+export default connect(mapStateToProps, {
+  fetchGames,
+  showMedia,
+})(GamesContainer)

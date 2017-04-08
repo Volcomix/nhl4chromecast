@@ -5,19 +5,17 @@ import {
   Image,
   Text,
   ActionSheetIOS,
-  AsyncStorage,
   StyleSheet,
 } from 'react-native'
-import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 
 import teamsImages from '../constants/teamsImages'
-import { formatFeed } from '../utils/gameUtils'
+import { formatFeed, getMedia } from '../utils/gameUtils'
 
 class GameRow extends Component {
   render() {
     const { game } = this.props
-    const { teams: { away: { team: away }, home: { team: home } } } = game
+    const away = game.teams.away.team
+    const home = game.teams.home.team
     const awayImage = teamsImages[away.abbreviation.toLowerCase()]
     const homeImage = teamsImages[home.abbreviation.toLowerCase()]
     return (
@@ -35,9 +33,10 @@ class GameRow extends Component {
   }
 
   chooseFeed = () => {
-    const { game, dispatch } = this.props
-    const { teams: { away: { team: away }, home: { team: home } } } = game
-    const media = game.content.media.epg.find(media => media.title === 'NHLTV')
+    const { game, showMedia } = this.props
+    const away = game.teams.away.team
+    const home = game.teams.home.team
+    const media = getMedia(game)
     const options = media.items.map(formatFeed)
     ActionSheetIOS.showActionSheetWithOptions(
       {
@@ -45,31 +44,9 @@ class GameRow extends Component {
         cancelButtonIndex: 0,
         title: `${away.name} - ${home.name}`,
       },
-      async buttonIndex => {
-        if (buttonIndex === 0) {
-          return
-        }
-        try {
-          const token = await AsyncStorage.getItem('token')
-          if (token === null) {
-            dispatch(NavigationActions.navigate({
-              routeName: 'Login',
-              params: {
-                game,
-                media: media.items[buttonIndex - 1]
-              }
-            }))
-          } else {
-            dispatch(NavigationActions.navigate({
-              routeName: 'Video',
-              params: {
-                game,
-                media: media.items[buttonIndex - 1]
-              }
-            }))
-          }
-        } catch (error) {
-          console.error(error)
+      buttonIndex => {
+        if (buttonIndex > 0) {
+          showMedia(media.items[buttonIndex - 1])
         }
       }
     )
@@ -103,4 +80,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect()(GameRow)
+export default GameRow

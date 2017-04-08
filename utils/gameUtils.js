@@ -10,3 +10,7 @@ export const formatFeed = ({ feedName, mediaFeedType, callLetters }) => {
     }
   }
 }
+
+export const getMedia = game => (
+  game.content.media.epg.find(media => media.title === 'NHLTV')
+)

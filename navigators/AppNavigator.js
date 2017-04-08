@@ -1,13 +1,13 @@
 import { StackNavigator } from 'react-navigation'
 import moment from 'moment'
 
-import Games from '../containers/Games'
+import GamesContainer from '../containers/GamesContainer'
 import Video from '../containers/Video'
 import Login from '../containers/Login'
 
 const AppNavigator = StackNavigator(
   {
-    Games: { screen: Games },
+    Games: { screen: GamesContainer },
     Video: { screen: Video },
     Login: { screen: Login },
   },

@@ -15,12 +15,12 @@ export const fetchGames = date => async dispatch => {
   }
 }
 
-export const requestGames = date => ({
+const requestGames = date => ({
   type: types.REQUEST_GAMES,
-  date
+  date,
 })
 
-export const receiveGames = (date, json) => ({
+const receiveGames = (date, json) => ({
   type: types.RECEIVE_GAMES,
-  games: json.dates ? json.dates[0].games : []
+  games: json.dates ? json.dates[0].games : [],
 })
