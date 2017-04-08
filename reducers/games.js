@@ -6,7 +6,7 @@ const initialState = {
   items: []
 }
 
-const gamesReducer = (state = initialState, action) => {
+const games = (state = initialState, action) => {
   switch (action.type) {
     case types.REQUEST_GAMES: return requestGames(state, action)
     case types.RECEIVE_GAMES: return receiveGames(state, action)
@@ -26,4 +26,4 @@ const receiveGames = (state, action) => ({
   items: action.games
 })
 
-export default gamesReducer
+export default games

@@ -8,27 +8,21 @@ import GameRow from './GameRow'
 
 class Games extends Component {
   static navigationOptions = {
-    title: ({ state }) => state.params.date.format('dddd D MMM'),
-    header: ({ state, dispatch, setParams }) => {
-      const previousDate = moment(state.params.date).subtract(1, 'day')
-      const nextDate = moment(state.params.date).add(1, 'day')
+    title: ({ state: { params: { date } } }) => date.format('dddd D MMM'),
+    header: ({ state: { params: { date } }, dispatch }) => {
+      const previousDate = moment(date).subtract(1, 'day')
+      const nextDate = moment(date).add(1, 'day')
       return {
         left: (
           <Button
             title={previousDate.format('D MMM')}
-            onPress={() => {
-              dispatch(fetchGames(previousDate))
-              setParams({ date: previousDate })
-            }}
+            onPress={() => dispatch(fetchGames(previousDate))}
           />
         ),
         right: (
           <Button
             title={nextDate.format('D MMM')}
-            onPress={() => {
-              dispatch(fetchGames(nextDate))
-              setParams({ date: nextDate })
-            }}
+            onPress={() => dispatch(fetchGames(nextDate))}
           />
         ),
         backTitle: 'Retour',
@@ -37,9 +31,10 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, navigation } = this.props
-    const { params } = navigation.state
-    dispatch(fetchGames(params.date))
+    const { dispatch, navigation: { state: { params } }, date } = this.props
+    if (date === undefined) {
+      dispatch(fetchGames(params.date))
+    }
   }
 
   render() {
@@ -72,6 +67,7 @@ const gamesDataSource = new ListView.DataSource({
 
 const mapStateToProps = ({ games }) => ({
   isFetching: games.isFetching,
+  date: games.date,
   games: gamesDataSource.cloneWithRows(games.items),
 })
 
