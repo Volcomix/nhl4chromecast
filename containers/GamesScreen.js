@@ -7,7 +7,7 @@ import { fetchGames } from '../actions/games'
 import { showMedia } from '../actions/media'
 import Games from '../components/Games'
 
-class GamesContainer extends Component {
+class GamesScreen extends Component {
   static navigationOptions = {
     header: ({ state, dispatch }) => {
       const date = state.params.date
@@ -60,4 +60,4 @@ const mapStateToProps = ({ games }) => ({
 export default connect(mapStateToProps, {
   fetchGames,
   showMedia,
-})(GamesContainer)
+})(GamesScreen)
