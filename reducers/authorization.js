@@ -3,7 +3,7 @@ import * as types from '../constants/actionTypes'
 const initialState = {
   isInProgress: false,
   userToken: undefined,
-  sessionKey: '',
+  sessionKey: undefined,
 }
 
 const authorization = (state = initialState, action) => {

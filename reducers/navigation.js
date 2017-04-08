@@ -7,7 +7,7 @@ const navigation = (state, action) => {
   switch (action.type) {
     case types.REQUEST_GAMES: return requestGames(state, action)
     case types.ASK_LOGIN: return askLogin(state, action)
-    case types.LOAD_MEDIA: return loadMedia(state)
+    case types.REQUEST_MEDIA_URL: return showMedia(state)
     case types.RECEIVE_USER_TOKEN: return receiveUserToken(state, action)
     default: return defaultState(state, action)
   }
@@ -30,7 +30,7 @@ const askLogin = (state, action) => (
   )
 )
 
-const loadMedia = (state, action) => (
+const showMedia = (state, action) => (
   AppNavigator.router.getStateForAction(
     NavigationActions.navigate({ routeName: 'Video' }),
     state
@@ -41,7 +41,7 @@ const receiveUserToken = (state, action) => {
   if (action.media === undefined) {
     return defaultState(state, action)
   } else {
-    return loadMedia(state, action)
+    return showMedia(state, action)
   }
 }
 
