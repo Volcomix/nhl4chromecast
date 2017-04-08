@@ -3,13 +3,13 @@ import moment from 'moment'
 
 import GamesScreen from '../containers/GamesScreen'
 import Video from '../containers/Video'
-import Login from '../containers/Login'
+import LoginScreen from '../containers/LoginScreen'
 
 const AppNavigator = StackNavigator(
   {
     Games: { screen: GamesScreen },
     Video: { screen: Video },
-    Login: { screen: Login },
+    Login: { screen: LoginScreen },
   },
   {
     initialRouteParams: {

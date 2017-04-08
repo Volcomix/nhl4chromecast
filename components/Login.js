@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import { View, TextInput, Button, AsyncStorage, StyleSheet } from 'react-native'
+import { View, ActivityIndicator, TextInput, Button, StyleSheet } from 'react-native'
 
 class Login extends Component {
-  static navigationOptions = {
-    title: 'Authentification',
-  }
-
   render() {
+    const { isInProgress, onLoginPressed } = this.props
     return (
       <View style={styles.container}>
         <View style={[styles.row, styles.textField]}>
@@ -28,21 +25,16 @@ class Login extends Component {
           />
         </View>
         <View style={styles.row}>
-          <Button
-            title='Se connecter'
-            onPress={this.login}
-          />
+          {isInProgress ?
+            <ActivityIndicator style={styles.progress} /> :
+            <Button
+              title='Se connecter'
+              onPress={onLoginPressed}
+            />
+          }
         </View>
       </View>
     )
-  }
-
-  login = async () => {
-    try {
-      await AsyncStorage.setItem('token', '666')
-    } catch (error) {
-      console.error(error)
-    }
   }
 }
 
@@ -63,6 +55,9 @@ const styles = StyleSheet.create({
   row: {
     height: 60,
     justifyContent: 'flex-end',
+  },
+  progress: {
+    height: 40,
   },
 })
 

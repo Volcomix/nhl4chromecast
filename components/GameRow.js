@@ -33,7 +33,7 @@ class GameRow extends Component {
   }
 
   chooseFeed = () => {
-    const { game, showMedia } = this.props
+    const { game, onMediaSelected } = this.props
     const away = game.teams.away.team
     const home = game.teams.home.team
     const media = getMedia(game)
@@ -46,7 +46,7 @@ class GameRow extends Component {
       },
       buttonIndex => {
         if (buttonIndex > 0) {
-          showMedia(media.items[buttonIndex - 1])
+          onMediaSelected(media.items[buttonIndex - 1])
         }
       }
     )

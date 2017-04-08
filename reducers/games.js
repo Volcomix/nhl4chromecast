@@ -3,7 +3,7 @@ import * as types from '../constants/actionTypes'
 const initialState = {
   isFetching: false,
   date: undefined,
-  items: []
+  items: [],
 }
 
 const games = (state = initialState, action) => {
@@ -17,13 +17,13 @@ const games = (state = initialState, action) => {
 const requestGames = (state, action) => ({
   ...state,
   isFetching: true,
-  date: action.date
+  date: action.date,
 })
 
 const receiveGames = (state, action) => ({
   ...state,
   isFetching: false,
-  items: action.games
+  items: action.games,
 })
 
 export default games

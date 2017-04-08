@@ -5,7 +5,7 @@ import GameRow from './GameRow'
 
 class Games extends Component {
   render() {
-    const { isFetching, games, showMedia } = this.props
+    const { isFetching, games, onMediaSelected } = this.props
     return (
       <View style={styles.container}>
         {isFetching ?
@@ -13,7 +13,7 @@ class Games extends Component {
           <ListView
             dataSource={games}
             renderRow={game => (
-              <GameRow game={game} showMedia={showMedia} />
+              <GameRow game={game} onMediaSelected={onMediaSelected} />
             )}
             enableEmptySections={true}
           />

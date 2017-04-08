@@ -3,9 +3,9 @@ import { Button, ListView } from 'react-native'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
+import Games from '../components/Games'
 import { fetchGames } from '../actions/games'
 import { showMedia } from '../actions/media'
-import Games from '../components/Games'
 
 class GamesScreen extends Component {
   static navigationOptions = {
@@ -42,7 +42,7 @@ class GamesScreen extends Component {
   render() {
     const { isFetching, games, showMedia } = this.props
     return (
-      <Games isFetching={isFetching} games={games} showMedia={showMedia} />
+      <Games isFetching={isFetching} games={games} onMediaSelected={showMedia} />
     )
   }
 }
