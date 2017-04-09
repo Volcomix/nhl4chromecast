@@ -37,6 +37,8 @@
 		3A4F9355CEC3E37014A6B571 /* libPods-nhl4chromecast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F436EF96380D1B054263C14 /* libPods-nhl4chromecast.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		BB82A6D01E9A972800C5A69D /* RNTCastButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB82A6CF1E9A972800C5A69D /* RNTCastButtonManager.m */; };
+		BB82A6EC1E9A9CD500C5A69D /* GoogleCastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB82A6EB1E9A9CD500C5A69D /* GoogleCastManager.m */; };
 		BBC3E7391E92BD42009A3A3B /* BundleURLProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC3E7381E92BD42009A3A3B /* BundleURLProvider.m */; };
 /* End PBXBuildFile section */
 
@@ -260,6 +262,10 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		BB71DF3C1E9A924700F49FBF /* RNTCastButtonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNTCastButtonManager.h; path = nhl4chromecast/RNTCastButtonManager.h; sourceTree = "<group>"; };
+		BB82A6CF1E9A972800C5A69D /* RNTCastButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNTCastButtonManager.m; path = nhl4chromecast/RNTCastButtonManager.m; sourceTree = "<group>"; };
+		BB82A6EA1E9A9CCA00C5A69D /* GoogleCastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoogleCastManager.h; path = nhl4chromecast/GoogleCastManager.h; sourceTree = "<group>"; };
+		BB82A6EB1E9A9CD500C5A69D /* GoogleCastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoogleCastManager.m; path = nhl4chromecast/GoogleCastManager.m; sourceTree = "<group>"; };
 		BBC3E71E1E92BAC7009A3A3B /* BundleURLProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BundleURLProvider.h; path = nhl4chromecast/BundleURLProvider.h; sourceTree = "<group>"; };
 		BBC3E7381E92BD42009A3A3B /* BundleURLProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BundleURLProvider.m; path = nhl4chromecast/BundleURLProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -397,6 +403,10 @@
 		13B07FAE1A68108700A75B9A /* nhl4chromecast */ = {
 			isa = PBXGroup;
 			children = (
+				BB82A6EB1E9A9CD500C5A69D /* GoogleCastManager.m */,
+				BB82A6EA1E9A9CCA00C5A69D /* GoogleCastManager.h */,
+				BB82A6CF1E9A972800C5A69D /* RNTCastButtonManager.m */,
+				BB71DF3C1E9A924700F49FBF /* RNTCastButtonManager.h */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -988,7 +998,9 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				BB82A6EC1E9A9CD500C5A69D /* GoogleCastManager.m in Sources */,
 				BBC3E7391E92BD42009A3A3B /* BundleURLProvider.m in Sources */,
+				BB82A6D01E9A972800C5A69D /* RNTCastButtonManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

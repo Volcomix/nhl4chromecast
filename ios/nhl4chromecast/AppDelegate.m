@@ -11,15 +11,26 @@
 #import "BundleURLProvider.h"
 
 #import <React/RCTRootView.h>
-#import <GoogleCast/Googlecast.h>
+#import <React/RCTLog.h>
 
 @implementation AppDelegate
+
+static const BOOL kDebugLoggingEnabled = YES;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   GCKCastOptions *options =
     [[GCKCastOptions alloc] initWithReceiverApplicationID:kGCKMediaDefaultReceiverApplicationID];
   [GCKCastContext setSharedInstanceWithOptions:options];
+
+  [GCKLogger sharedInstance].delegate = self;
+  
+  GCKLoggerFilter *logFilter = [[GCKLoggerFilter alloc] init];
+  [logFilter setLoggingLevel:GCKLoggerLevelVerbose
+    forClasses:@[
+    @"GCKUIMediaController"
+  ]];
+  [GCKLogger sharedInstance].filter = logFilter;
 
   NSURL *jsCodeLocation;
 
@@ -37,6 +48,14 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+
+#pragma mark - GCKLoggerDelegate
+
+- (void)logMessage:(NSString *)message fromFunction:(NSString *)function {
+  if (kDebugLoggingEnabled) {
+    RCTLogInfo(@"%@  %@", function, message);
+  }
 }
 
 @end

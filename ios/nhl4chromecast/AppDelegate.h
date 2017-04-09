@@ -8,8 +8,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <GoogleCast/Googlecast.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate<GCKLoggerDelegate> : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 

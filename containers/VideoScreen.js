@@ -3,15 +3,23 @@ import {
   View,
   ActivityIndicator,
   Text,
-  StyleSheet
+  Button,
+  StyleSheet,
+  NativeModules,
 } from 'react-native'
 import { connect } from 'react-redux'
 
+import CastButton from '../components/CastButton'
 import { formatFeed } from '../utils/gameUtils'
+
+const GoogleCast = NativeModules.GoogleCastManager
 
 class VideoScreen extends Component {
   static navigationOptions = {
-    title: 'Vidéo',
+    header: () => ({
+      title: 'Vidéo',
+      right: <CastButton style={styles.castButton} />,
+    }),
   }
 
   render() {
@@ -23,9 +31,16 @@ class VideoScreen extends Component {
         </Text>
         {isFetching ?
           <ActivityIndicator size='large' /> :
-          <Text>
-            {url}
-          </Text>
+          <Button
+            title='Regarder'
+            onPress={() => GoogleCast.loadMedia({
+              title: formatFeed(info),
+              subtitle: 'Sous-titre',
+              url,
+              contentType: 'video/m3u8',
+              duration: 0,
+            })}
+          />
         }
       </View>
     )
@@ -36,6 +51,11 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 8,
     alignItems: 'center',
+  },
+  castButton: {
+    width: 24,
+    height: 24,
+    margin: 16,
   },
 })
 
