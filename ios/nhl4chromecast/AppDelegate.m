@@ -11,11 +11,16 @@
 #import "BundleURLProvider.h"
 
 #import <React/RCTRootView.h>
+#import <GoogleCast/Googlecast.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  GCKCastOptions *options =
+    [[GCKCastOptions alloc] initWithReceiverApplicationID:kGCKMediaDefaultReceiverApplicationID];
+  [GCKCastContext setSharedInstanceWithOptions:options];
+
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[BundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
