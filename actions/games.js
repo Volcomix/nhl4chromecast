@@ -22,5 +22,5 @@ const requestGames = date => ({
 
 const receiveGames = (date, json) => ({
   type: types.RECEIVE_GAMES,
-  games: json.dates ? json.dates[0].games : [],
+  games: json.dates && json.dates.length ? json.dates[0].games : [],
 })

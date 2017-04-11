@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <GoogleCast/Googlecast.h>
 
-@interface AppDelegate<GCKLoggerDelegate> : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GCKLoggerDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 
