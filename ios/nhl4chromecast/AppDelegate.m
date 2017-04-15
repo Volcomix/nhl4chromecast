@@ -19,8 +19,9 @@ static const BOOL kDebugLoggingEnabled = YES;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSString *kReceiverAppID = [NSString stringWithFormat:@"%08X", 140601722 ^ 152633930];
   GCKCastOptions *options =
-    [[GCKCastOptions alloc] initWithReceiverApplicationID:kGCKMediaDefaultReceiverApplicationID];
+    [[GCKCastOptions alloc] initWithReceiverApplicationID:kReceiverAppID];
   [GCKCastContext setSharedInstanceWithOptions:options];
 
   [GCKLogger sharedInstance].delegate = self;

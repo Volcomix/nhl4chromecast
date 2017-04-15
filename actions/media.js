@@ -1,26 +1,27 @@
 import { AsyncStorage } from 'react-native'
 
 import * as types from '../constants/actionTypes'
-import { askLogin } from './authorization'
+import { askLogin, receiveUserToken } from './authorization'
 
-export const showMedia = media => async (dispatch, getState) => {
+export const showMedia = (game, media) => async (dispatch, getState) => {
   try {
     let userToken = getState().authorization.userToken
     if (userToken === undefined) {
       userToken = await AsyncStorage.getItem('userToken')
+      dispatch(receiveUserToken(userToken))
     }
     if (userToken === null) {
-      dispatch(askLogin(media))
+      dispatch(askLogin(game, media))
     } else {
-      dispatch(fetchMediaUrl(media, userToken))
+      dispatch(fetchMediaUrl(game, media, userToken))
     }
   } catch (error) {
     console.error(error)
   }
 }
 
-const fetchMediaUrl = (media, userToken) => async (dispatch, getState) => {
-  dispatch(requestMediaUrl(media))
+const fetchMediaUrl = (game, media, userToken) => async (dispatch, getState) => {
+  dispatch(requestMediaUrl(game, media))
   const hostname = 'https://mf.svc.nhl.com'
   const options = getOptions(userToken)
   let { sessionKey } = getState().authorization
@@ -67,8 +68,9 @@ const getParams = (media, sessionKey) => {
     .join('&')
 }
 
-const requestMediaUrl = media => ({
+const requestMediaUrl = (game, media) => ({
   type: types.REQUEST_MEDIA_URL,
+  game,
   media,
 })
 

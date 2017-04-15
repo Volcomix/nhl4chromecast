@@ -46,7 +46,7 @@ class GameRow extends Component {
       },
       buttonIndex => {
         if (buttonIndex > 0) {
-          onMediaSelected(media.items[buttonIndex - 1])
+          onMediaSelected(game, media.items[buttonIndex - 1])
         }
       }
     )

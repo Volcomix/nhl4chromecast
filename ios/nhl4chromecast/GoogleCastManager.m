@@ -12,14 +12,14 @@ RCT_EXPORT_METHOD(loadMedia:(NSDictionary *)info)
   GCKMediaMetadata *metadata =
     [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
   [metadata setString:[RCTConvert NSString:info[@"title"]] forKey:kGCKMetadataKeyTitle];
-  [metadata setString:[RCTConvert NSString:info[@"subtitle"]] forKey:kGCKMetadataKeySubtitle];
 
-  /*[metadata addImage:[[GCKImage alloc] initWithURL:[RCTConvert NSString:info[@"awayImage"]]
-                                            width:480
-                                            height:720]];
-  [metadata addImage:[[GCKImage alloc] initWithURL:[RCTConvert NSString:info[@"HomeImage"]]
-                                            width:480
-                                            height:720]];*/
+  [metadata addImage:[[GCKImage alloc] initWithURL:[NSURL URLWithString:[RCTConvert NSString:info[@"thumbnailImageUrl"]]]
+                                             width:0
+                                            height:0]];
+  [metadata addImage:[[GCKImage alloc] initWithURL:[NSURL URLWithString:[RCTConvert NSString:info[@"largeImageUrl"]]]
+                                             width:0
+                                            height:0]];
+  
   GCKMediaInformation *mediaInfo = [[GCKMediaInformation alloc]
     initWithContentID:[RCTConvert NSString:info[@"url"]]
            streamType:GCKMediaStreamTypeBuffered
@@ -28,7 +28,7 @@ RCT_EXPORT_METHOD(loadMedia:(NSDictionary *)info)
        streamDuration:[RCTConvert NSInteger:info[@"duration"]]
           mediaTracks:nil
        textTrackStyle:nil
-           customData:nil];
+           customData:info[@"customData"]];
 
   GCKCastSession *session =
     [GCKCastContext sharedInstance].sessionManager.currentCastSession;

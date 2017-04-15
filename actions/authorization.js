@@ -4,8 +4,9 @@ import * as types from '../constants/actionTypes'
 
 const hostname = 'https://user.svc.nhl.com'
 
-export const askLogin = media => ({
+export const askLogin = (game, media) => ({
   type: types.ASK_LOGIN,
+  game,
   media,
 })
 
@@ -68,7 +69,7 @@ const requestUserToken = () => ({
   type: types.REQUEST_USER_TOKEN,
 })
 
-const receiveUserToken = (userToken, media) => ({
+export const receiveUserToken = (userToken, media) => ({
   type: types.RECEIVE_USER_TOKEN,
   userToken,
   media,

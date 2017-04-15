@@ -23,22 +23,34 @@ class VideoScreen extends Component {
   }
 
   render() {
-    const { isFetching, info, url } = this.props
+    const { isFetching, game, info, url, userToken } = this.props
+    const away = game.teams.away.team
+    const home = game.teams.home.team
+    const title = `${away.teamName} @ ${home.teamName}`
     return (
       <View style={styles.container}>
         <Text>
-          {formatFeed(info)}
+          {title}
         </Text>
         {isFetching ?
           <ActivityIndicator size='large' /> :
           <Button
             title='Regarder'
             onPress={() => GoogleCast.loadMedia({
-              title: formatFeed(info),
-              subtitle: 'Sous-titre',
+              title,
+              thumbnailImageUrl: 'http://nhl.bamcontent.com/images/logos/400x400/chromecast/nhl.png',
+              largeImageUrl: 'http://nhl.bamcontent.com/images/logos/1024x768/chromecast/nhl.png',
               url,
-              contentType: 'video/m3u8',
+              contentType: 'video/mp4',
               duration: 0,
+              customData: {
+                authorization: userToken,
+                contentId: game.gamePk,
+                isLive: false,
+                currentTime: 0,
+                playbackContentId: info.mediaPlaybackId,
+                playbackUrl: url,
+              },
             })}
           />
         }
@@ -59,10 +71,12 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = ({ media }) => ({
+const mapStateToProps = ({ authorization, media }) => ({
   isFetching: media.isFetching,
+  game: media.game,
   info: media.info,
   url: media.url,
+  userToken: authorization.userToken,
 })
 
 export default connect(mapStateToProps)(VideoScreen)

@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes'
 
 const initialState = {
   isFetching: false,
+  game: undefined,
   info: undefined,
   url: undefined,
 }
@@ -17,12 +18,14 @@ const media = (state = initialState, action) => {
 
 const initMedia = (state, action) => ({
   ...state,
+  game: action.game,
   info: action.media,
   url: undefined,
 })
 
 const requestMediaUrl = (state, action) => ({
   isFetching: true,
+  game: action.game,
   info: action.media,
   url: undefined,
 })
