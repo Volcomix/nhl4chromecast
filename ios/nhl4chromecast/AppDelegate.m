@@ -26,6 +26,8 @@ static const BOOL kDebugLoggingEnabled = YES;
 
   [GCKLogger sharedInstance].delegate = self;
   
+  [GCKCastContext sharedInstance].useDefaultExpandedMediaControls = YES;
+  
   GCKLoggerFilter *logFilter = [[GCKLoggerFilter alloc] init];
   [logFilter setLoggingLevel:GCKLoggerLevelVerbose
     forClasses:@[
