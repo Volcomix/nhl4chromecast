@@ -27,6 +27,26 @@ static const BOOL kDebugLoggingEnabled = YES;
   [GCKLogger sharedInstance].delegate = self;
   
   [GCKCastContext sharedInstance].useDefaultExpandedMediaControls = YES;
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setButtonType:GCKUIMediaButtonTypeRewind30Seconds
+                                                                                    atIndex:0];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setButtonType:GCKUIMediaButtonTypeForward30Seconds
+                                                                                    atIndex:1];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setButtonType:GCKUIMediaButtonTypeCustom
+                                                                                    atIndex:2];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setButtonType:GCKUIMediaButtonTypeCustom
+                                                                                    atIndex:3];
+
+  UIButton *forward2Minutes = [UIButton buttonWithType:UIButtonTypeCustom];
+  [forward2Minutes setTitle:@"+2"
+                   forState:UIControlStateNormal];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setCustomButton:forward2Minutes
+                                                                                      atIndex:2];
+
+  UIButton *forward15Minutes = [UIButton buttonWithType:UIButtonTypeCustom];
+  [forward15Minutes setTitle:@"+15"
+                    forState:UIControlStateNormal];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setCustomButton:forward15Minutes
+                                                                                      atIndex:3];
   
   GCKLoggerFilter *logFilter = [[GCKLoggerFilter alloc] init];
   [logFilter setLoggingLevel:GCKLoggerLevelVerbose
