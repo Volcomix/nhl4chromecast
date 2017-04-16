@@ -9,9 +9,9 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(loadMedia:(NSDictionary *)info)
 {
-  GCKMediaMetadata *metadata =
-    [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
-  [metadata setString:[RCTConvert NSString:info[@"title"]] forKey:kGCKMetadataKeyTitle];
+  GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
+  [metadata setString:[RCTConvert NSString:info[@"title"]]
+                                    forKey:kGCKMetadataKeyTitle];
 
   [metadata addImage:[[GCKImage alloc] initWithURL:[NSURL URLWithString:[RCTConvert NSString:info[@"thumbnailImageUrl"]]]
                                              width:0
@@ -30,11 +30,11 @@ RCT_EXPORT_METHOD(loadMedia:(NSDictionary *)info)
        textTrackStyle:nil
            customData:info[@"customData"]];
 
-  GCKCastSession *session =
-    [GCKCastContext sharedInstance].sessionManager.currentCastSession;
+  GCKCastSession *session = [GCKCastContext sharedInstance].sessionManager.currentCastSession;
   if (session)
   {
-    [session.remoteMediaClient loadMedia:mediaInfo autoplay:YES];
+    [session.remoteMediaClient loadMedia:mediaInfo
+                                autoplay:YES];
   }
 }
 

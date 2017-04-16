@@ -20,12 +20,37 @@ static const BOOL kDebugLoggingEnabled = YES;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSString *kReceiverAppID = [NSString stringWithFormat:@"%08X", 140601722 ^ 152633930];
-  GCKCastOptions *options =
-    [[GCKCastOptions alloc] initWithReceiverApplicationID:kReceiverAppID];
+  GCKCastOptions *options = [[GCKCastOptions alloc] initWithReceiverApplicationID:kReceiverAppID];
   [GCKCastContext setSharedInstanceWithOptions:options];
 
   [GCKLogger sharedInstance].delegate = self;
   
+  [self initExpandedMediaControls];
+  [self initLogger];
+
+  NSURL *jsCodeLocation = [[BundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios"
+                                                                      fallbackResource:nil];
+
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                      moduleName:@"nhl4chromecast"
+                                               initialProperties:nil
+                                                   launchOptions:launchOptions];
+
+  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f
+                                                    green:1.0f
+                                                     blue:1.0f
+                                                    alpha:1];
+
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIViewController *rootViewController = [UIViewController new];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+
+- (void)initExpandedMediaControls
+{
   [GCKCastContext sharedInstance].useDefaultExpandedMediaControls = YES;
   [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setButtonType:GCKUIMediaButtonTypeRewind30Seconds
                                                                                     atIndex:0];
@@ -36,46 +61,57 @@ static const BOOL kDebugLoggingEnabled = YES;
   [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setButtonType:GCKUIMediaButtonTypeCustom
                                                                                     atIndex:3];
 
-  UIButton *forward2Minutes = [UIButton buttonWithType:UIButtonTypeCustom];
-  [forward2Minutes setTitle:@"+2"
-                   forState:UIControlStateNormal];
-  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setCustomButton:forward2Minutes
+  UIButton *forward2MinutesButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [forward2MinutesButton setTitle:@"+2"
+                         forState:UIControlStateNormal];
+  [forward2MinutesButton addTarget:self
+                            action:@selector(forward2Minutes)
+                  forControlEvents:UIControlEventTouchUpInside];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setCustomButton:forward2MinutesButton
                                                                                       atIndex:2];
 
-  UIButton *forward15Minutes = [UIButton buttonWithType:UIButtonTypeCustom];
-  [forward15Minutes setTitle:@"+15"
-                    forState:UIControlStateNormal];
-  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setCustomButton:forward15Minutes
+  UIButton *forward18MinutesButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [forward18MinutesButton setTitle:@"+18"
+                          forState:UIControlStateNormal];
+  [forward18MinutesButton addTarget:self
+                             action:@selector(forward18Minutes)
+                   forControlEvents:UIControlEventTouchUpInside];
+  [[GCKCastContext sharedInstance].defaultExpandedMediaControlsViewController setCustomButton:forward18MinutesButton
                                                                                       atIndex:3];
-  
+}
+
+- (IBAction)forward2Minutes
+{
+  [self forwardMinutes:2];
+}
+
+- (IBAction)forward18Minutes
+{
+  [self forwardMinutes:18];
+}
+
+- (void)forwardMinutes:(NSTimeInterval) minutes
+{
+  GCKCastSession *session = [GCKCastContext sharedInstance].sessionManager.currentCastSession;
+  if (session)
+  {
+    NSTimeInterval position = [session.remoteMediaClient approximateStreamPosition];
+    [session.remoteMediaClient seekToTimeInterval:position + minutes * 60];
+  }
+}
+
+- (void)initLogger
+{
   GCKLoggerFilter *logFilter = [[GCKLoggerFilter alloc] init];
   [logFilter setLoggingLevel:GCKLoggerLevelVerbose
-    forClasses:@[
-    @"GCKUIMediaController"
-  ]];
+                  forClasses:@[@"GCKUIMediaController"]];
   [GCKLogger sharedInstance].filter = logFilter;
-
-  NSURL *jsCodeLocation;
-
-  jsCodeLocation = [[BundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"nhl4chromecast"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-  return YES;
 }
 
 #pragma mark - GCKLoggerDelegate
 
-- (void)logMessage:(NSString *)message fromFunction:(NSString *)function {
+- (void)logMessage:(NSString *)message fromFunction:(NSString *)function
+{
   if (kDebugLoggingEnabled) {
     RCTLogInfo(@"%@  %@", function, message);
   }
