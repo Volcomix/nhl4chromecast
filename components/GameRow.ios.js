@@ -41,7 +41,7 @@ class GameRow extends Component {
       {
         options: ['Annuler', ...options],
         cancelButtonIndex: 0,
-        title: `${away.name} - ${home.name}`,
+        title: `${away.teamName} @ ${home.teamName}`,
       },
       buttonIndex => {
         if (buttonIndex > 0) {

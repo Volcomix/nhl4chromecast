@@ -9,11 +9,13 @@ import {
 
 class Video extends Component {
   render() {
-    const { isFetching, title, onWatchPressed } = this.props
+    const { isFetching, game, onWatchPressed } = this.props
+    const away = game.teams.away.team
+    const home = game.teams.home.team
     return (
       <View style={styles.container}>
         <Text>
-          {title}
+          {`${away.name} @ ${home.name}`}
         </Text>
         {isFetching ?
           <ActivityIndicator size='large' /> :

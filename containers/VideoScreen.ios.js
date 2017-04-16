@@ -16,16 +16,18 @@ class VideoScreen extends Component {
   }
 
   render() {
-    const { isFetching, title } = this.props
+    const { isFetching, game } = this.props
     return (
-      <Video isFetching={isFetching} title={title} onWatchPressed={this.loadMedia} />
+      <Video isFetching={isFetching} game={game} onWatchPressed={this.loadMedia} />
     )
   }
 
   loadMedia = () => {
-    const { title, game, info, url, userToken } = this.props
+    const { game, url, info, userToken } = this.props
+    const away = game.teams.away.team
+    const home = game.teams.home.team
     GoogleCast.loadMedia({
-      title,
+      title: `${away.teamName} @ ${home.teamName}`,
       thumbnailImageUrl: 'http://nhl.bamcontent.com/images/logos/400x400/chromecast/nhl.png',
       largeImageUrl: 'http://nhl.bamcontent.com/images/logos/1024x768/chromecast/nhl.png',
       url,
@@ -52,14 +54,11 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = ({ authorization, media }) => {
-  const away = media.game.teams.away.team
-  const home = media.game.teams.home.team
   return {
     isFetching: media.isFetching,
-    title: `${away.teamName} @ ${home.teamName}`,
     game: media.game,
-    info: media.info,
     url: media.url,
+    info: media.info,
     userToken: authorization.userToken,
   }
 }
