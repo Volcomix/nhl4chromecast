@@ -3,23 +3,32 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "webpack-dev-server",
+    "rn": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
+    "material-ui": "^0.17.4",
     "moment": "^2.18.1",
     "react": "~15.4.1",
+    "react-dom": "~15.4.1",
+    "react-hot-loader": "next",
     "react-native": "0.42.3",
     "react-navigation": "^1.0.0-beta.7",
     "react-redux": "^5.0.3",
+    "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
+    "babel-loader": "^6.4.1",
     "babel-preset-react-native": "1.9.1",
     "jest": "19.0.2",
-    "react-test-renderer": "~15.4.1"
+    "react-test-renderer": "~15.4.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "jest": {
     "preset": "react-native"
