@@ -1,7 +1,6 @@
 #import "GoogleCastManager.h"
 
 #import <React/RCTConvert.h>
-#import <GoogleCast/Googlecast.h>
 
 @implementation GoogleCastManager
 
@@ -33,9 +32,17 @@ RCT_EXPORT_METHOD(loadMedia:(NSDictionary *)info)
   GCKCastSession *session = [GCKCastContext sharedInstance].sessionManager.currentCastSession;
   if (session)
   {
-    [session.remoteMediaClient loadMedia:mediaInfo
-                                autoplay:YES];
+    GCKRequest *request = [session.remoteMediaClient loadMedia:mediaInfo
+                                                      autoplay:YES];
+    request.delegate = self;
   }
+}
+
+#pragma mark - GCKRequestDelegate
+
+- (void)requestDidComplete:(GCKRequest *)request
+{
+  [[GCKCastContext sharedInstance] presentDefaultExpandedMediaControls];
 }
 
 @end
