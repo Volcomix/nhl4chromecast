@@ -1,4 +1,17 @@
 {
-  "presets": ["react-native"],
-  "plugins": ["react-hot-loader/babel"]
+  "env": {
+    "chrome": {
+      "presets": [
+        ["env", { "modules": false }],
+        "stage-2",
+        "react"
+      ],
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    },
+    "mobile": {
+      "presets": ["react-native"]
+    }
+  }
 }

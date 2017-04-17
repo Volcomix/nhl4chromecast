@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server",
-    "rn": "node node_modules/react-native/local-cli/cli.js start",
+    "chrome": "BABEL_ENV=chrome webpack-dev-server --hot --history-api-fallback",
+    "mobile": "BABEL_ENV=mobile node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
@@ -24,7 +24,10 @@
   "devDependencies": {
     "babel-jest": "19.0.0",
     "babel-loader": "^6.4.1",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-native": "1.9.1",
+    "babel-preset-stage-2": "^6.24.1",
     "jest": "19.0.2",
     "react-test-renderer": "~15.4.1",
     "webpack": "^2.4.1",

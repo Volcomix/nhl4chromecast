@@ -1,7 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import moment from 'moment'
 
-const GamesScreen = () => (
-  <div>Games</div>
-)
+import { fetchGames } from '../actions/games'
+//import { showMedia } from '../actions/media'
 
-export default GamesScreen
+class GamesScreen extends Component {
+
+  componentDidMount() {
+    const { fetchGames, date } = this.props
+    if (date === undefined) {
+      const yesterday = moment().subtract(1, 'day')
+      fetchGames(yesterday)
+    }
+  }
+
+  render() {
+    const { isFetching, games, showMedia } = this.props
+    return (
+      <div>
+        {games.map(game => (
+          <div key={game.gamePk}>{game.gamePk}</div>
+        ))}
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = ({ games }) => ({
+  isFetching: games.isFetching,
+  date: games.date,
+  games: games.items,
+})
+
+export default connect(mapStateToProps, {
+  fetchGames,
+  //showMedia,
+})(GamesScreen)

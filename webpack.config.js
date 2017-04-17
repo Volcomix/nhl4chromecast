@@ -1,32 +1,25 @@
-const { resolve } = require('path')
 const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    './index.js'
-  ],
-  output: {
-    filename: 'bundle.js',
-  },
   devtool: 'inline-source-map',
-  devServer: {
-    hot: true,
-    historyApiFallback: true,
+  entry: {
+    'app': [
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './index',
+    ],
+  },
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].js',
   },
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        use: ['babel-loader',],
-        exclude: /node_modules/
-      },
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
   ],
 }
