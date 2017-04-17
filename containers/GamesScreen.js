@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import {
   Toolbar,
   ToolbarGroup,
-  ToolbarSeparator,
   ToolbarTitle,
 } from 'material-ui/Toolbar'
+import FlatButton from 'material-ui/FlatButton'
 import moment from 'moment'
 
 import Games from '../components/Games'
@@ -23,10 +23,25 @@ class GamesScreen extends Component {
   }
 
   render() {
-    const { isFetching, games, showMedia } = this.props
+    let { date, isFetching, games, showMedia } = this.props
+    if (date === undefined) {
+      date = moment().subtract(1, 'day')
+    }
+    const previousDate = moment(date).subtract(1, 'day')
+    const nextDate = moment(date).add(1, 'day')
     return (
       <div style={styles.container}>
-        <Toolbar style={styles.toolbar} />
+        <Toolbar style={styles.toolbar}>
+          <ToolbarGroup>
+            <FlatButton label={previousDate.format('D MMM')} primary={true} />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <ToolbarTitle text={date.format('dddd D MMMM')} />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <FlatButton label={nextDate.format('D MMM')} primary={true} />
+          </ToolbarGroup>
+        </Toolbar>
         <Games
           isFetching={isFetching}
           games={games}
