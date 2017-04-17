@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
+import Games from '../components/Games'
 import { fetchGames } from '../actions/games'
 //import { showMedia } from '../actions/media'
 
@@ -18,11 +19,7 @@ class GamesScreen extends Component {
   render() {
     const { isFetching, games, showMedia } = this.props
     return (
-      <div>
-        {games.map(game => (
-          <div key={game.gamePk}>{game.gamePk}</div>
-        ))}
-      </div>
+      <Games isFetching={isFetching} games={games} onMediaSelected={showMedia} />
     )
   }
 }
