@@ -42,7 +42,10 @@ class GamesScreen extends Component {
   render() {
     const { isFetching, games, showMedia } = this.props
     return (
-      <Games isFetching={isFetching} games={games} onMediaSelected={showMedia} />
+      <Games
+        isFetching={isFetching}
+        games={games}
+        onMediaSelected={showMedia} />
     )
   }
 }

@@ -20,9 +20,14 @@ const Games = ({ isFetching, games, onMediaSelected }) => (
 const styles = {
   container: {
     display: 'flex',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'fixed',
+    top: 56,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    overflow: 'auto',
   },
   list: {
     flex: 1,
