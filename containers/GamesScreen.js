@@ -53,7 +53,7 @@ class GamesScreen extends Component {
         <Games
           isFetching={isFetching}
           games={games}
-          onMediaSelected={showMedia}
+          onGamePressed={showMedia}
         />
       </div>
     )

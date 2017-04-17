@@ -4,13 +4,17 @@ import { List } from 'material-ui/List'
 
 import GameRow from './GameRow'
 
-const Games = ({ isFetching, games, onMediaSelected }) => (
+const Games = ({ isFetching, games, onGamePressed }) => (
   <div style={styles.container}>
     {isFetching ?
       <CircularProgress /> :
       <List style={styles.list}>
         {games.map(game => (
-          <GameRow key={game.gamePk} game={game} />
+          <GameRow
+            key={game.gamePk}
+            game={game}
+            onGamePressed={onGamePressed}
+          />
         ))}
       </List>
     }
@@ -32,7 +36,7 @@ const styles = {
   list: {
     flex: 1,
     alignSelf: 'flex-start',
-    maxWidth: 600,
+    maxWidth: 400,
   },
 }
 

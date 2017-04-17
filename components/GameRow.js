@@ -1,18 +1,30 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { ListItem } from 'material-ui/List'
 
-const GameRow = ({ game }) => {
+const GameRow = ({ game, onGamePressed }) => {
   const away = game.teams.away.team
   const home = game.teams.home.team
   return (
     <ListItem
-      innerDivStyle={styles.container}
-      leftIcon={<img src={`img/${away.abbreviation.toLowerCase()}.png`} />}
-      rightIcon={<img src={`img/${home.abbreviation.toLowerCase()}.png`} />}
+      style={styles.container}
+      innerDivStyle={styles.listItem}
+      leftIcon={
+        <img
+          style={styles.image}
+          src={`img/${away.abbreviation.toLowerCase()}.png`}
+        />
+      }
+      rightIcon={
+        <img
+          style={styles.image}
+          src={`img/${home.abbreviation.toLowerCase()}.png`}
+        />
+      }
+      onTouchTap={onGamePressed}
     >
       <div style={styles.teamNames}>
-        <span>{away.name}</span>
-        <span>{home.name}</span>
+        <span>{away.teamName}</span>
+        <span>{home.teamName}</span>
       </div>
     </ListItem>
   )
@@ -20,11 +32,19 @@ const GameRow = ({ game }) => {
 
 const styles = {
   container: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+  },
+  listItem: {
     padding: '16px 56px',
   },
   teamNames: {
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  image: {
+    width: 32,
+    height: 32,
+    margin: 8,
   },
 }
 
