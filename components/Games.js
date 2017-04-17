@@ -32,6 +32,7 @@ const styles = {
   list: {
     flex: 1,
     alignSelf: 'flex-start',
+    maxWidth: 600,
   },
 }
 
