@@ -23,7 +23,7 @@ class GamesScreen extends Component {
   }
 
   render() {
-    let { date, isFetching, games, showMedia } = this.props
+    let { date, isFetching, games, fetchGames, showMedia } = this.props
     if (date === undefined) {
       date = moment().subtract(1, 'day')
     }
@@ -33,13 +33,21 @@ class GamesScreen extends Component {
       <div style={styles.container}>
         <Toolbar style={styles.toolbar}>
           <ToolbarGroup>
-            <FlatButton label={previousDate.format('D MMM')} primary={true} />
+            <FlatButton
+              label={previousDate.format('D MMM')}
+              primary={true}
+              onTouchTap={() => fetchGames(previousDate)}
+            />
           </ToolbarGroup>
           <ToolbarGroup>
             <ToolbarTitle text={date.format('dddd D MMMM')} />
           </ToolbarGroup>
           <ToolbarGroup>
-            <FlatButton label={nextDate.format('D MMM')} primary={true} />
+            <FlatButton
+              label={nextDate.format('D MMM')}
+              primary={true}
+              onTouchTap={() => fetchGames(nextDate)}
+            />
           </ToolbarGroup>
         </Toolbar>
         <Games
